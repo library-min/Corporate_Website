@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JM Company - 글쓰기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html">JM Company</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">회사 소개</a></li>
+                    <li><a href="teams.html">팀</a></li>
+                    <li><a href="careers.html">채용</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="page-header">
+            <h2>글쓰기</h2>
+            <p>새로운 글을 작성해주세요.</p>
+        </section>
+
+        <section id="write-form">
+            <div class="container">
+                <form id="post-form">
+                    <div class="form-group">
+                        <label for="post-title">제목</label>
+                        <input type="text" id="post-title" placeholder="제목을 입력하세요" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-content">내용</label>
+                        <textarea id="post-content" rows="15" placeholder="내용을 입력하세요" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="cta-button">등록하기</button>
+                        <a href="board.html" class="cta-button secondary">취소</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 JM Company. All rights reserved.</p>
+            <ul>
+                <li><a href="#">개인정보처리방침</a></li>
+                <li><a href="#">이용약관</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

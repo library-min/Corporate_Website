@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // particles.js 초기화
     if (document.getElementById('particles-js')) {
@@ -231,25 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 팀 페이지 카드 애니메이션 (teams.html 에만 적용)
-    if (currentPage === 'teams.html') {
-        const teamCards = document.querySelectorAll('.animate-team-card');
-        const teamCardObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                } else {
-                    entry.target.style.opacity = 0;
-                    entry.target.style.transform = 'translateY(50px)';
-                }
-            });
-        }, { threshold: 0.2 });
-
-        teamCards.forEach(card => {
-            teamCardObserver.observe(card);
-        });
-    }
+    // 팀 페이지 카드 애니메이션 (teams.html 에만 적용) - 제거됨
 
     // 채용 페이지 카드 애니메이션 (careers.html 에만 적용)
     if (currentPage === 'careers.html') {
@@ -292,5 +273,106 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.5 });
 
         pageHeaderObserver.observe(document.getElementById('page-header'));
+    }
+
+    // --- 게시판 기능 추가 ---
+    if (currentPage === 'board.html' || currentPage === 'write.html' || currentPage === '') {
+        // 'write.html' 페이지의 폼 제출 이벤트 처리
+        if (document.getElementById('post-form')) {
+            document.getElementById('post-form').addEventListener('submit', savePost);
+        }
+        // 'board.html' 페이지의 게시글 목록 로드
+        if (document.querySelector('.board-table')) {
+            loadPosts();
+        }
+    }
+});
+
+function savePost(event) {
+    event.preventDefault();
+
+    const title = document.getElementById('post-title').value;
+    const content = document.getElementById('post-content').value;
+
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+    const newPost = {
+        id: posts.length > 0 ? posts[posts.length - 1].id + 1 : 1,
+        title,
+        content,
+        author: '사용자',
+        date: new Date().toISOString().slice(0, 10),
+        views: 0
+    };
+
+    posts.push(newPost);
+    localStorage.setItem('posts', JSON.stringify(posts));
+
+    window.location.href = 'board.html';
+}
+
+function loadPosts() {
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+    const boardTableBody = document.querySelector('.board-table tbody');
+
+    if (boardTableBody) {
+        boardTableBody.innerHTML = ''; // 기존 예시 데이터 삭제
+
+        posts.reverse().forEach(post => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-id', post.id); // data-id 속성 추가
+            row.innerHTML = `
+                <td>${post.id}</td>
+                <td class="title"><a href="#">${post.title}</a></td>
+                <td>${post.author}</td>
+                <td>${post.date}</td>
+                <td>${post.views}</td>
+                <td><button class="delete-btn">삭제</button></td>
+            `;
+            boardTableBody.appendChild(row);
+        });
+
+        // 삭제 버튼에 이벤트 리스너 추가
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const postId = e.target.closest('tr').dataset.id;
+                deletePost(parseInt(postId));
+            });
+        });
+    }
+}
+
+function deletePost(id) {
+    let posts = JSON.parse(localStorage.getItem('posts')) || [];
+    posts = posts.filter(post => post.id !== id);
+    localStorage.setItem('posts', JSON.stringify(posts));
+    loadPosts(); // 게시글 목록 새로고침
+}
+
+// --- 드롭다운 메뉴 모바일 클릭 이벤트 처리 ---
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.querySelector('.dropdown .dropbtn');
+    if (dropdown) {
+        dropdown.addEventListener('click', (event) => {
+            // 모바일 화면에서만 클릭 이벤트 작동 (데스크톱 호버와 충돌 방지)
+            if (window.innerWidth <= 768) {
+                event.preventDefault(); // a 태그의 기본 동작(페이지 이동) 방지
+                const dropdownContent = dropdown.nextElementSibling;
+                dropdownContent.classList.toggle('show');
+            }
+        });
+    }
+
+    // 다른 곳을 클릭하면 드롭다운 메뉴 닫기
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
     }
 });

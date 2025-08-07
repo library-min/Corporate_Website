@@ -53,6 +53,11 @@ header nav ul {
 header nav ul li {
     display: inline-block;
     margin-left: 2rem;
+    position: relative; /* 드롭다운 내용의 기준점 설정 */
+}
+
+header nav ul li.dropdown a.dropbtn {
+    display: block; /* 드롭다운 버튼이 블록 요소가 되도록 설정 */
 }
 
 header nav a {
@@ -63,7 +68,7 @@ header nav a {
     padding-bottom: 5px;
 }
 
-header nav a.active {
+header nav > ul > li > a.active {
     border-bottom: 2px solid #222;
 }
 
@@ -255,7 +260,7 @@ main h3 i {
 
 .achievements {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* 가로로 균등 배치 */
     text-align: center;
 }
 
@@ -338,12 +343,12 @@ main h3 i {
     background: #fff;
     border: 1px solid #eee;
     border-radius: 15px;
-    padding: 2rem;
+    padding: 1.5rem; /* 상하좌우 패딩을 1.5rem으로 설정 */
     flex: 1; /* 각 카드가 동일한 공간을 차지하도록 설정 */
     min-width: 0; /* 카드가 내용보다 작게 줄어들 수 있도록 허용 */
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+    text-align: left; /* 텍스트를 왼쪽 정렬 */
 }
 
 .card:hover, .job-card:hover {
@@ -355,17 +360,166 @@ main h3 i {
     font-size: 2.5rem; /* 아이콘 크기 조정 */
     color: #222;
     margin-bottom: 1rem;
+    font-family: "Font Awesome 6 Free" !important; /* Font Awesome 폰트 지정 */
+    font-weight: 900 !important; /* Solid 아이콘의 font-weight */
+}
+
+/* 팀 아이콘 색상 */
+.icon-core {
+    color: #808080; /* 회색 */
+}
+
+.icon-product {
+    color: #FFD700; /* 노란색 */
+}
+
+.icon-design {
+    color: #FFA500; /* 주황색 */
+}
+
+/* 팀 드롭다운 스타일 */
+.team-dropdowns {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap; /* 반응형을 위해 추가 */
+}
+
+.team-dropdown {
+    position: relative;
+    width: 300px; /* 각 드롭다운의 너비 */
+    text-align: center;
+    cursor: pointer;
+    padding: 1.5rem; /* 패딩 유지 */
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.04); /* 더 미묘한 그림자 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* border: 1px solid #ddd; 테두리 제거 */
+}
+
+.team-dropdown:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15); /* 그림자 효과 강화 */
+}
+
+/* 호버 시 다른 드롭다운 흐리게 */
+.team-dropdowns:hover .team-dropdown:not(:hover) {
+    opacity: 0.4; /* 투명도 조절 */
+    transition: opacity 0.3s ease; /* 부드러운 전환 */
+}
+
+.team-dropbtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.team-dropbtn h4 {
+    margin-top: 0.5rem; /* 아이콘과의 간격 더 조정 */
+    font-size: 1.5rem;
+    color: #222;
+}
+
+.team-dropdown-content {
+    position: absolute;
+    background-color: #fefefe; /* 배경색 유지 */
+    min-width: 250px;
+    box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.08); /* 그림자 효과 부드럽게 */
+    z-index: 1;
+    border-radius: 5px;
+    padding: 1.5rem; /* 패딩 유지 */
+    /* border: 1px solid #eee; 테두리 제거 */
+    
+    opacity: 0;
+    transform: scale(0.9); /* 중앙에서 확장되는 느낌으로 변경 */
+    transform-origin: center; /* 중앙에서 확장되도록 */
+    transition: transform 0.3s ease-out, opacity 0.2s ease-out;
+    pointer-events: none;
+    
+    top: 100%; /* 버튼 바로 아래에 위치 */
+    left: 50%;
+    transform: translateX(-50%) scale(0.9); /* 중앙 정렬 및 초기 스케일 */
+}
+
+.team-dropdown:hover .team-dropdown-content {
+    opacity: 1;
+    transform: translateX(-50%) scale(1); /* 중앙에서 확장되도록 변경 */
+    pointer-events: auto;
+}
+
+.team-dropdown-content p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .team-dropdowns {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .team-dropdown {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .team-dropdown-content {
+        position: static; /* 모바일에서는 정적으로 */
+        transform: none; /* 애니메이션 제거 */
+        opacity: 1; /* 항상 보이도록 */
+        pointer-events: auto;
+        display: block; /* 항상 보이도록 */
+        min-width: auto;
+        box-shadow: none;
+        background-color: transparent;
+        padding: 0.5rem 0;
+    }
+
+    .team-dropdown:hover .team-dropdown-content {
+        transform: none;
+    }
 }
 
 .card h4, .job-card h4 {
     color: #222;
     font-size: 1.5rem; /* 제목 글꼴 크기 조정 */
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem; /* 간격 조정 */
+}
+
+.job-card h5 {
+    color: #222;
+    font-size: 1.1rem; /* h4보다 작고 p보다 크게 */
+    margin-top: 1rem; /* 위쪽 간격 조정 */
+    margin-bottom: 0.5rem; /* 아래쪽 간격 조정 */
+    text-align: left; /* 왼쪽 정렬 */
 }
 
 .card p, .job-card p {
     font-size: 0.9rem; /* 설명 글꼴 크기 조정 */
     color: #555;
+    margin-bottom: 1rem; /* 간격 조정 */
+}
+
+.job-card ul {
+    list-style: none; /* 기본 목록 스타일 제거 */
+    padding: 0;
+    margin: 0 0 1.5rem 0; /* 아래쪽 간격 조정 */
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+.job-card ul li {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.job-card ul li:last-child {
+    margin-bottom: 0;
 }
 
 .animate-card {
@@ -419,13 +573,17 @@ main h3 i {
 .apply-button {
     background-color: #222;
     color: #fff;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 2.5rem; /* 좌우 패딩 유지 */
     text-decoration: none;
     border-radius: 5px;
     font-weight: 600;
     transition: background-color 0.3s ease, color 0.3s ease;
     border: 2px solid #222;
-    margin-top: 1rem; /* 버튼 위쪽 여백 추가 */
+    margin-top: 4rem; /* 버튼 위쪽 여백 유지 */
+    display: block; /* 블록 레벨 요소로 변경 */
+    width: 100%; /* 너비를 100%로 설정 */
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .apply-button:hover {
@@ -484,12 +642,12 @@ main h3 i {
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     font-weight: 600;
 }
 
@@ -589,4 +747,196 @@ footer a:hover {
         max-width: 400px; /* 최대 너비 제한 */
         flex: none; /* flex: 1 속성 제거 */
     }
+
+    /* 모바일 드롭다운은 세로로 표시 */
+    .dropdown-content {
+        flex-direction: column;
+        position: static; /* 헤더 안으로 들어오도록 */
+        box-shadow: none;
+        background: transparent;
+        transform: none; /* 애니메이션 제거 */
+        opacity: 1; /* 항상 보이도록 */
+        pointer-events: auto; /* 항상 클릭 가능하도록 */
+        display: none; /* 기본적으로 숨김 (JS로 제어) */
+    }
+
+    .dropdown-content.show {
+        display: flex; /* JS로 보이게 할 때 flex로 설정 */
+    }
+}
+
+/* 게시판 스타일 */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.board-table th, .board-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.board-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.board-table .title {
+    text-align: left;
+}
+
+.board-table .title a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.board-table .title a:hover {
+    color: #555;
+}
+
+.board-actions {
+    text-align: right;
+}
+
+/* 글쓰기 폼 스타일 */
+#write-form .form-group {
+    margin-bottom: 2rem;
+}
+
+#write-form label {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+#write-form input[type="text"],
+#write-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#write-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.cta-button.secondary {
+    background-color: #f9f9f9;
+    color: #555;
+    border: 1px solid #ddd;
+}
+
+/* 드롭다운 메뉴 스타일 */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: flex; /* 항목을 가로로 정렬 */
+    flex-direction: column; /* 세로로 정렬 */
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style: none;
+    padding: 0.5rem 0; /* 상하 패딩 조정 */
+    border-radius: 5px;
+    
+    /* 왼쪽 기준으로 정렬 */
+    left: 0;
+    width: 100%; /* 부모 요소의 너비만큼 확장 */
+    transform: translateY(0); /* 나타날 때 위치 조정 */
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.2s ease-out;
+    pointer-events: none;
+}
+
+.dropdown-content li a {
+    color: black;
+    padding: 10px 20px; /* 좌우 패딩을 늘려 글자를 왼쪽으로 이동 */
+    text-decoration: none;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+/* 밑줄 애니메이션 */
+.dropdown-content li a::after {
+    content: '';
+    position: absolute;
+    width: 90%; /* 너비 조정 */
+    height: 2px;
+    bottom: 5px;
+    left: 5%; /* 왼쪽에서 시작 */
+    background-color: #222;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+}
+
+.dropdown-content li a:hover {
+    background-color: transparent;
+}
+
+.dropdown-content li a:hover::after {
+    transform: scaleX(1);
+}
+
+.dropdown .dropdown-content.show {
+    opacity: 1;
+    transform: translateY(0); /* 정위치로 이동 */
+    pointer-events: auto;
+}
+
+/* 회사 문화 & 복지 페이지 스타일 */
+.culture-grid, .welfare-list {
+    display: grid;
+    gap: 2rem;
+}
+
+.culture-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.culture-item, .welfare-item {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.culture-item i, .welfare-item i {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 1.5rem;
+}
+
+.welfare-list {
+    grid-template-columns: 1fr; /* 한 줄에 하나씩 */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.welfare-item {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.welfare-item h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    min-width: 200px; /* 제목 너비 고정 */
 }
