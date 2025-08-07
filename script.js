@@ -200,4 +200,97 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         });
     }
+
+    // 메인 페이지 문의 모달 로직 (index.html 에만 적용)
+    if (currentPage === '' || currentPage === 'index.html') {
+        const inquiryModalOverlay = document.getElementById('inquiry-modal');
+        const contactUsButton = document.getElementById('contact-us-button');
+        const inquiryCloseButton = inquiryModalOverlay.querySelector('.close-button');
+
+        contactUsButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            inquiryModalOverlay.classList.add('modal-open');
+        });
+
+        const closeInquiryModal = () => {
+            inquiryModalOverlay.classList.remove('modal-open');
+        }
+
+        inquiryCloseButton.addEventListener('click', closeInquiryModal);
+        inquiryModalOverlay.addEventListener('click', (e) => {
+            if (e.target === inquiryModalOverlay) {
+                closeInquiryModal();
+            }
+        });
+
+        const inquiryForm = document.getElementById('inquiry-form');
+        inquiryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('문의가 성공적으로 전송되었습니다!');
+            closeInquiryModal();
+        });
+    }
+
+    // 팀 페이지 카드 애니메이션 (teams.html 에만 적용)
+    if (currentPage === 'teams.html') {
+        const teamCards = document.querySelectorAll('.animate-team-card');
+        const teamCardObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                } else {
+                    entry.target.style.opacity = 0;
+                    entry.target.style.transform = 'translateY(50px)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        teamCards.forEach(card => {
+            teamCardObserver.observe(card);
+        });
+    }
+
+    // 채용 페이지 카드 애니메이션 (careers.html 에만 적용)
+    if (currentPage === 'careers.html') {
+        const jobCards = document.querySelectorAll('.animate-job-card');
+        const jobCardObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'rotateY(0deg) scale(1)';
+                } else {
+                    entry.target.style.opacity = 0;
+                    entry.target.style.transform = 'rotateY(90deg) scale(0.8)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        jobCards.forEach(card => {
+            jobCardObserver.observe(card);
+        });
+    }
+
+    // 페이지 헤더 텍스트 애니메이션 (teams.html, careers.html 에만 적용)
+    if (currentPage === 'teams.html' || currentPage === 'careers.html') {
+        const pageHeaderTitle = document.querySelector('#page-header h2');
+        const pageHeaderSubtitle = document.querySelector('#page-header p');
+
+        const pageHeaderObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    pageHeaderTitle.style.animation = 'fade-in-scale 1s ease-out forwards';
+                    pageHeaderSubtitle.style.animation = 'slide-in-left 1s ease-out 0.3s forwards';
+                } else {
+                    // 화면 밖으로 나가면 애니메이션 초기화 (다시 들어올 때 재생)
+                    pageHeaderTitle.style.animation = 'none';
+                    pageHeaderSubtitle.style.animation = 'none';
+                    pageHeaderTitle.offsetHeight; // Reflow 강제
+                    pageHeaderSubtitle.offsetHeight; // Reflow 강제
+                }
+            });
+        }, { threshold: 0.5 });
+
+        pageHeaderObserver.observe(document.getElementById('page-header'));
+    }
 });

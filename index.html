@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,7 +33,7 @@
             <div class="container hero-content">
                 <h2 class="animate-title">세상을 바꾸는 기술, Company</h2>
                 <p class="animate-subtitle">Company는 혁신적인 기술로 더 나은 세상을 만듭니다.</p>
-                <a href="#about" class="cta-button animate-button">더 알아보기</a>
+                <a href="#" class="cta-button animate-button" id="contact-us-button">문의하기</a>
             </div>
         </section>
 
@@ -86,6 +87,29 @@
             </div>
         </section>
     </main>
+
+    <!-- 문의 모달 -->
+    <div id="inquiry-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h3>문의하기</h3>
+            <form id="inquiry-form">
+                <div class="form-group">
+                    <label for="inquiry-name">이름</label>
+                    <input type="text" id="inquiry-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-email">이메일</label>
+                    <input type="email" id="inquiry-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="inquiry-message">메시지</label>
+                    <textarea id="inquiry-message" name="message" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">전송</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
