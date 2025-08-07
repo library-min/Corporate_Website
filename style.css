@@ -1,3 +1,4 @@
+
 /* 기본 스타일 */
 html {
     scroll-behavior: smooth;
@@ -269,7 +270,7 @@ main h3 i {
     font-weight: 700;
 }
 
-/* 타임라인 */
+/* 계단식 타임라인 */
 #history h3 {
     font-size: 2.5rem;
     color: #222;
@@ -279,97 +280,69 @@ main h3 i {
 }
 
 .timeline {
-    position: relative;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 800px;
     margin: 0 auto;
 }
 
-.timeline::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    background-color: #222;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -3px;
-}
-
 .timeline-item {
-    padding: 10px 40px;
     position: relative;
-    background-color: inherit;
-    width: 50%;
-    opacity: 0; /* 애니메이션 시작 상태 */
-    transform: translateX(-100px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 70%;
+    transition: transform 0.3s ease;
 }
 
-.timeline-item.visible {
-    opacity: 1; /* 애니메이션 끝 상태 */
-    transform: translateX(0);
+.timeline-item:hover {
+    transform: scale(1.03);
 }
 
 .timeline-item:nth-child(odd) {
-    left: 0;
+    align-self: flex-start;
+    border-left: 4px solid #222;
 }
 
 .timeline-item:nth-child(even) {
-    left: 50%;
-    transform: translateX(100px); /* 오른쪽에서 등장 */
+    align-self: flex-end;
+    border-right: 4px solid #222;
+    background: #f9f9f9; /* 짝수 아이템 배경색 변경 */
 }
 
-.timeline-item.visible:nth-child(even) {
-    transform: translateX(0);
+.timeline-panel {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
 }
 
-.timeline-item::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: -17px;
-    background-color: white;
-    border: 4px solid #222;
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.timeline-item:nth-child(even)::after {
-    left: -16px;
-}
-
-.timeline-content {
-    padding: 20px 30px;
-    background-color: white;
-    position: relative;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+.timeline-year {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
 }
 
 /* 팀 카드 & 채용 카드 */
 .team-cards, .job-postings {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap; /* Changed from nowrap */
+    justify-content: center; /* 중앙 정렬 */
+    gap: 1rem; /* 카드 사이의 간격 */
+    padding: 1rem;
 }
 
 .card, .job-card {
     background: #fff;
     border: 1px solid #eee;
     border-radius: 15px;
-    padding: 2.5rem;
-    width: 30%;
+    padding: 2rem;
+    flex: 1; /* 각 카드가 동일한 공간을 차지하도록 설정 */
+    min-width: 0; /* 카드가 내용보다 작게 줄어들 수 있도록 허용 */
     box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin: 0 1rem; /* 카드 사이의 간격 조정 */
     text-align: center;
 }
 
@@ -576,7 +549,7 @@ footer a:hover {
 /* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .timeline::after {
-        left: 31px;
+        left: 35px; /* Adjusted for mobile */
     }
 
     .timeline-item {
@@ -587,7 +560,7 @@ footer a:hover {
 
     .timeline-item:nth-child(odd), .timeline-item:nth-child(even) {
         left: 0;
-        transform: translateX(-100px); /* 모바일에서도 동일한 시작 위치 */
+        transform: translateX(0); /* 모바일에서는 애니메이션 시작 위치를 0으로 */
     }
 
     .timeline-item.visible:nth-child(odd), .timeline-item.visible:nth-child(even) {
@@ -595,17 +568,20 @@ footer a:hover {
     }
 
     .timeline-item::after {
-        left: 15px;
+        left: 22.5px; /* (line_width / 2) + (circle_width / 2) - padding-left_offset */
     }
 
     /* 카드 반응형 */
     .team-cards, .job-postings {
-        flex-direction: column; /* 세로로 정렬 */
-        align-items: center; /* 중앙 정렬 */
+        flex-direction: row; /* 가로 정렬 유지 */
+        overflow-x: auto; /* 가로 스크롤 허용 */
+        justify-content: flex-start; /* 왼쪽 정렬 */
+        padding: 0 1rem; /* 좌우 패딩 */
     }
 
     .card, .job-card {
-        width: 90%; /* 모바일에서 카드 너비 조정 */
-        margin: 1rem auto; /* 상하 여백 추가 및 중앙 정렬 */
+        min-width: 280px; /* 모바일에서 최소 너비 유지 */
+        width: calc(100% / 3 - 2rem); /* 3개 나란히 보이도록 */
+        margin: 0 1rem; /* 카드 사이의 간격 */
     }
 }
