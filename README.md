@@ -4,4 +4,4 @@ VibeCoding
 
 https://library-min.github.io/VibeCoding/
 
-![alt text](Vibe.png)
+![alt text](VibeCoding.png)
