@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company - 채용</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="index.html">Company</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">회사 소개</a></li>
+                    <li><a href="teams.html">팀</a></li>
+                    <li><a href="careers.html">채용</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="page-header">
+            <div class="container">
+                <h2>Join Us</h2>
+                <p>미래를 향한 위대한 여정에 함께할 동료를 찾습니다.</p>
+            </div>
+        </section>
+
+        <section id="careers">
+            <div class="container">
+                <div class="job-postings">
+                    <div class="job-card animate-card">
+                        <h4>프론트엔드 개발자</h4>
+                        <p>최신 웹 기술을 사용하여 사용자에게 최고의 경험을 제공합니다.</p>
+                        <a href="#" class="apply-button">지원하기</a>
+                    </div>
+                    <div class="job-card animate-card">
+                        <h4>백엔드 개발자</h4>
+                        <p>대규모 트래픽을 처리하는 안정적이고 효율적인 서버를 개발합니다.</p>
+                        <a href="#" class="apply-button">지원하기</a>
+                    </div>
+                    <div class="job-card animate-card">
+                        <h4>UI/UX 디자이너</h4>
+                        <p>데이터와 사용자 리서치를 기반으로 직관적인 디자인을 설계합니다.</p>
+                        <a href="#" class="apply-button">지원하기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 지원서 모달 -->
+    <div id="application-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h3>입사 지원</h3>
+            <form id="application-form">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="resume">이력서 (PDF)</label>
+                    <input type="file" id="resume" name="resume" accept=".pdf" required>
+                </div>
+                <button type="submit" class="submit-button">제출하기</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Company. All rights reserved.</p>
+            <ul>
+                <li><a href="#">개인정보처리방침</a></li>
+                <li><a href="#">이용약관</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
