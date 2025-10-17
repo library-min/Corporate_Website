@@ -1,6 +1,6 @@
 # 회사 홈페이지 (Corporate Website)
 
-### 📸 화면 미리보기 (Screenshots)
+### 📸 화면 미리보기
 ![alt text](VibeCoding.png)
 
 ---
